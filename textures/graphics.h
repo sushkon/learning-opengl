@@ -57,29 +57,9 @@ void CreateTriangle()
         -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 2.0f  // top left
     };
     
-    GLfloat vertices_shaders[] = {
-        -0.2f, -0.2f,  0.0f,  0.4f, 1.0f, 0.0f, 1.0f, 0.0f,
-        -0.2f,  0.0f,  0.0f,  1.0f, 0.2f, 0.8f, 0.0f, 0.0f,
-        0.0f,  0.0f,  0.0f,  0.2f, 0.8f, 0.0f,  0.0f, 1.0f,
-        0.2f, -0.2f,  0.0f,  1.0f, 0.0f, 0.8f,  1.0f, 1.0f,
-        0.2f,  0.0f,  0.0f,  0.4f, 1.0f, 0.0f,  0.0f, 0.0f,
-        -0.1f,  0.1f,  0.0f,  1.0f, 0.0f, 0.2f, 1.0f, 0.5f,
-        0.1f,  0.1f,  0.0f,  1.0f, 0.0f, 1.0f , 0.5f, 0.5f
-    };
-    
-    GLuint indices1[] = {  // note that we start from 0!
+    GLuint indices[] = {  // note that we start from 0!
         0, 1, 3,   // first triangle
         1, 2, 3
-    };
-    
-    GLuint indices1_shaders[] = {
-        // 0, 1, 2,   // first triangle
-        // 2, 3, 4   // second triangle
-    };
-    
-    GLuint indices2[] = {  // note that we start from 0!
-        4, 2, 6,
-        5, 2, 1
     };
     
     glGenVertexArrays(1, &VAO[0]);
@@ -87,7 +67,7 @@ void CreateTriangle()
     
     glGenBuffers(1, &EBO[0]);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO[0]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices1), indices1, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
     
     glGenBuffers(1, &VBO[0]);
     glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
@@ -95,108 +75,13 @@ void CreateTriangle()
     
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), 0);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void *)(3*sizeof(GLfloat)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void *)(3 * sizeof(GLfloat)));
     glEnableVertexAttribArray(1);
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-    glEnableVertexAttribArray(2);
-    
-    // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
-    
-    
-    glGenVertexArrays(1, &VAO[1]);
-    glBindVertexArray(VAO[1]);
-    
-    glGenBuffers(1, &EBO[1]);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO[1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices2), indices2, GL_STATIC_DRAW);
-    
-    glGenBuffers(1, &VBO[1]);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO[1]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-    
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), 0);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void *)(3*sizeof(GLfloat)));
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void *)(6 * sizeof(GLfloat)));
     glEnableVertexAttribArray(2);
     
     // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }
-
-/*
-void AddShader(GLuint theProgram, const char* shaderCode, GLenum shaderType)
-{
-    GLuint theShader = glCreateShader(shaderType);
-    
-    const GLchar* theCode[1];
-    theCode[0] = shaderCode;
-    
-    GLint codeLength[1];
-    codeLength[0] = strlen(shaderCode);
-    
-    glShaderSource(theShader, 1, theCode, codeLength);
-    glCompileShader(theShader);
-    
-    GLint result = 0;
-    GLchar eLog[1024] = { 0 };
-    
-    glGetShaderiv(theShader, GL_COMPILE_STATUS, &result);
-    if (!result)
-    {
-        glGetProgramInfoLog(theShader, sizeof(eLog), NULL, eLog);
-        printf("Error compiling the %d shader: '%s'\n", shaderType, eLog);
-        return;
-    }
-    
-    glAttachShader(theProgram, theShader);
-}
-
-void LinkAndValidateShader(GLuint theProgram) {
-    GLint result = 0;
-    GLchar eLog[1024] = { 0 };
-    
-    glLinkProgram(theProgram);
-    glGetProgramiv(theProgram, GL_LINK_STATUS, &result);
-    if (!result)
-    {
-        glGetProgramInfoLog(theProgram, sizeof(eLog), NULL, eLog);
-        printf("Error linking program: '%s'\n", eLog);
-        return;
-    }
-    
-    glValidateProgram(theProgram);
-    glGetProgramiv(theProgram, GL_VALIDATE_STATUS, &result);
-    if (!result)
-    {
-        glGetProgramInfoLog(theProgram, sizeof(eLog), NULL, eLog);
-        printf("Error validating program: '%s'\n", eLog);
-        return;
-    }
-}
-
-void CompileShaders() {
-    shader[0] = glCreateProgram();
-    if (!shader[0]) {
-        printf("Error creating shader program!\n");
-        return;
-    }
-    AddShader(shader[0], vShader, GL_VERTEX_SHADER);
-    AddShader(shader[0], fShader, GL_FRAGMENT_SHADER);
-    LinkAndValidateShader(shader[0]);
-    
-    shader[1] = glCreateProgram();
-    if (!shader[1]) {
-        printf("Error creating shader program!\n");
-        return;
-    }
-    AddShader(shader[1], vShader, GL_VERTEX_SHADER);
-    AddShader(shader[1], fShader2, GL_FRAGMENT_SHADER);
-    LinkAndValidateShader(shader[1]);
-}
-*/
 #endif /* graphics_h */
