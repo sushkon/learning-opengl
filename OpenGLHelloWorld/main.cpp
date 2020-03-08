@@ -70,11 +70,9 @@ int main(int argc, const char * argv[]) {
     unsigned int texture0 = LoadTexture("container.jpg", GL_RGB, GL_CLAMP_TO_EDGE, GL_LINEAR);
     unsigned int texture1 = LoadTexture("awesomeface.png", GL_RGBA, GL_REPEAT, GL_LINEAR);
     
-    // CompileShaders();
     // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     
-    // loop until window closed
-    
+    // loop until window closed  
     while (!glfwWindowShouldClose (mainWindow)) {
         // get and handle user input events
         glfwPollEvents();
@@ -89,13 +87,13 @@ int main(int argc, const char * argv[]) {
         float delta_x  = (sin(timeValue) / 2.0f);
         float tex_ratio= (sin(timeValue) / 2.0f) + 0.5f;
         
-        // render the OpenGL, put all your OpenGL code here
-        // glUseProgram(shader[0]);
         // bind and activate textures
         glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, texture0);
         glActiveTexture(GL_TEXTURE1);
             glBindTexture(GL_TEXTURE_2D, texture1);
+        
+        // load shader and assin uniform values
         tShader.use();
             // tShader.setFloat4("userColor", 1.0f, greenValue, 1.0f, 1.0);
             tShader.setFloat4("userColor", redValue, 1.0f, 1.0f, 1.0);
@@ -104,6 +102,7 @@ int main(int argc, const char * argv[]) {
             tShader.setFloat("x_loc", delta_x);
             tShader.setFloat("textureRatio", tex_ratio);
         
+        // bind vertices
         glBindVertexArray(VAO[0]);
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         glUseProgram(0);
