@@ -121,7 +121,7 @@ int main(int argc, const char * argv[]) {
             glm::mat4 trans = glm::mat4(1.0f);
             trans = glm::translate(trans, glm::vec3(trans_x, trans_y, 0.0f));
             trans = glm::scale(trans, glm::vec3(0.25, 0.25, 0.25));
-            tShader1.setMat4("transform", trans);
+            tShader.setMat4("transform", trans);
             // transform textures
             glm::mat4 texTrans = glm::mat4(1.0f);
             texTrans = glm::scale(texTrans, glm::vec3(0.5, 0.5, 0.5));
