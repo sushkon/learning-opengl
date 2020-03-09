@@ -64,10 +64,9 @@ int main(int argc, const char * argv[]) {
     CreateTriangle();
     // build and compile our shader program
     // ------------------------------------
-    Shader tShader("/Users/sushant/Documents/OpenGLTransformations/OpenGLTransformations/triangle.vs", "/Users/sushant/Documents/OpenGLTransformations/OpenGLTransformations/triangle.fs"); // you can name your shader files however you like
-    Shader tShader1("/Users/sushant/Documents/OpenGLTransformations/OpenGLTransformations/triangle.vs", "/Users/sushant/Documents/OpenGLTransformations/OpenGLTransformations/triangle.fs"); // you can name your shader files however you like
-    unsigned int texture0 = LoadTexture("/Users/sushant/Documents/OpenGLTransformations/OpenGLTransformations/container.jpg", GL_RGB, GL_CLAMP_TO_EDGE, GL_LINEAR);
-    unsigned int texture1 = LoadTexture("/Users/sushant/Documents/OpenGLTransformations/OpenGLTransformations/awesomeface.png", GL_RGBA, GL_REPEAT, GL_LINEAR);
+    Shader tShader("triangle.vs", "triangle.fs"); // you can name your shader files however you like
+    unsigned int texture0 = LoadTexture("container.jpg", GL_RGB, GL_CLAMP_TO_EDGE, GL_LINEAR);
+    unsigned int texture1 = LoadTexture("awesomeface.png", GL_RGBA, GL_REPEAT, GL_LINEAR);
     
     // CompileShaders();
     // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
