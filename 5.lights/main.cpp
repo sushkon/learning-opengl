@@ -84,14 +84,14 @@ int main(int argc, const char * argv[]) {
     CreateTriangle();
     // build and compile our shader program
     // ------------------------------------
-    Shader tShader("/Users/sushant/Documents/OpenGLLighting/OpenGLLighting/cube.vs", "/Users/sushant/Documents/OpenGLLighting/OpenGLLighting/cube.fs"); // you can name your shader files however you like
+    Shader tShader("cube.vs", "cube.fs"); // you can name your shader files however you like
  
-    Shader lightShader("/Users/sushant/Documents/OpenGLLighting/OpenGLLighting/cube.vs", "/Users/sushant/Documents/OpenGLLighting/OpenGLLighting/light.fs");
+    Shader lightShader("cube.vs", "light.fs");
     
     // load textures (we now use a utility function to keep the code more organized)
-    unsigned int diffuseMap = LoadTexture("/Users/sushant/Documents/OpenGLLighting/OpenGLLighting/container2.png", GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR);
-    unsigned int specularMap = LoadTexture("/Users/sushant/Documents/OpenGLLighting/OpenGLLighting/container2_specular.png", GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR);
-    unsigned int emmissionMap = LoadTexture("/Users/sushant/Documents/OpenGLLighting/OpenGLLighting/matrix.jpg", GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR);
+    unsigned int diffuseMap = LoadTexture("container2.png", GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR);
+    unsigned int specularMap = LoadTexture("container2_specular.png", GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR);
+    unsigned int emmissionMap = LoadTexture("matrix.jpg", GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR);
     
     // CompileShaders();
     // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
